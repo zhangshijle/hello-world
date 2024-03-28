@@ -4,7 +4,7 @@
 1.将基于go语言开发的项目进行代码编译、构建成容器镜像并上传到京东云镜像仓库、部署到京东云kubernetes环境, 并
 实现基于ALB在公网访问
 
-2.在京东云云主机部署jenkins，用于实现kubernetes环境中的APP代码部署和回滚
+2.在京东云部署jenkins,用于实现kubernetes环境中的APP代码部署和回滚
 
 3.编写脚本、基于jenkins实现go语言代码在kubernetes环境中的部署和回滚
 ```
