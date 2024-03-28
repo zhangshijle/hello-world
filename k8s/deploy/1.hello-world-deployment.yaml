@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: myserver-hello-world-container
-        image: myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:v1 
+        image: myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:v3 
         imagePullPolicy: IfNotPresent
         #imagePullPolicy: Always
         ports:

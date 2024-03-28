@@ -17,7 +17,7 @@ metadata:
         - protocol: "tcp" #指定ALB的监听协议为TCP,listener的协议,alb:Tcp,Http,Https,Tls;nlb:Tcp;dnlb:Tcp
           connectionIdleTimeSeconds: 600
           backend:
-            proxyProtocol: true
+            proxyProtocol: false
           healthCheckSpec:                                     # 健康检查的配置 
             protocol: "tcp"                                   # 健康检查协议, 【alb、nlb】取值为Http, Tcp【dnlb】取值为Tcp
             port: 31080                                         # 检查端口, 取值范围为[0,65535], 默认为0，默认端口为每个后端实例接收负载均衡流量的端口 (Optional)
