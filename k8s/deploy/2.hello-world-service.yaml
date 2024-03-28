@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: myserver
+  name: myserver-hello-world-alb
+  labels:
+    k8s-app: myserver-hello-world-alb
+  annotations: #具体参考: https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-service-new
+    service.beta.kubernetes.io/jdcloud-load-balancer-spec: |
+      version: "v1"
+      loadBalancerType: alb #指定LB类型为ALB
+      #loadBalancerId: "alb-xxxxxxx" #可以指定ID复用已有的LB
+      internal: false #是否内部LB, false为非内部LB会创建公网IP,true不会创建公网IP
+      elasticIp:       # 默认创建按配置收费
+        bandwidthMbps: 1 # 单位为兆、默认5M带宽，后期修改带宽值要修改yaml文件并重新apply一次，如果在控制台修改带宽等配置、后期会重新以yaml文件还原
+      listeners:
+        - protocol: "tcp" #指定ALB的监听协议为TCP,listener的协议,alb:Tcp,Http,Https,Tls;nlb:Tcp;dnlb:Tcp
+          connectionIdleTimeSeconds: 600
+          backend:
+            proxyProtocol: true
+          healthCheckSpec:                                     # 健康检查的配置 
+            protocol: "tcp"                                   # 健康检查协议, 【alb、nlb】取值为Http, Tcp【dnlb】取值为Tcp
+            port: 31080                                         # 检查端口, 取值范围为[0,65535], 默认为0，默认端口为每个后端实例接收负载均衡流量的端口 (Optional)
+            healthyThresholdCount: 3                           # 健康阀值，取值范围为[1,5]，默认为3 (Optional)
+            unhealthyThresholdCount: 3                         # 不健康阀值，取值范围为[1,5], 默认为3 (Optional)
+            checkTimeoutSeconds: 3                             # 响应超时时间, 取值范围为[2,60]，默认为3s (Optional)
+            intervalSeconds: 5                                 # 健康检查间隔, 范围为[5,300], 默认为5s (Optional)
+
+        #- protocol: "tcp"
+        #  connectionIdleTimeSeconds: 600
+        #  backend:
+        #    proxyProtocol: true
+spec:
+  ports:
+    - protocol: TCP
+      port: 80 #svc端口、会作为ALB的监听端口
+      targetPort: 8080 #svc转发的目的controller中的服务端口
+      nodePort: 31080 #node端口,ALB需要将客户的请求转发到此端口
+  type: LoadBalancer
+  selector:
+    app: myserver-hello-world-selector
+    project: myserver
