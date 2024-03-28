@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    app: myserver-hello-world-deployment-label
+  name: myserver-hello-world-deployment
+  namespace: myserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myserver-hello-world-selector
+  template:
+    metadata:
+      labels:
+        app: myserver-hello-world-selector
+        project: myserver
+    spec:
+      containers:
+      - name: myserver-hello-world-container
+        image: myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:v2 
+        imagePullPolicy: IfNotPresent
+        #imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: http
+      imagePullSecrets:
+      - name: jcr-pull-secret
