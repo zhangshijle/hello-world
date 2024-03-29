@@ -8,6 +8,9 @@ GitHub 地址：https://github.com/zhangshijle/hello-world
 2.在京东云部署jenkins,用于实现kubernetes环境中的APP代码部署和回滚
 
 3.编写脚本、基于jenkins实现go语言代码在kubernetes环境中的部署和回滚
+
+4.基于docker创建容器并指定skywalking服务器:
+  docker run -it --rm -p 9001:8080 -e SW_AGENT_REPORTER_GRPC_BACKEND_SERVICE=172.31.2.161:11800 -e SW_AGENT_NAME=myserver-go-app2 myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:v6
 ```
 
 

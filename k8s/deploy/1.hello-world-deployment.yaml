@@ -18,9 +18,14 @@ spec:
     spec:
       containers:
       - name: myserver-hello-world-container
-        image: myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:main 
-        imagePullPolicy: IfNotPresent
-        #imagePullPolicy: Always
+        image: myserver-cn-north-1.jcr.service.jdcloud.com/myserver/hello-world:for-skywalking 
+        #imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        env:
+        - name: "SW_AGENT_REPORTER_GRPC_BACKEND_SERVICE"
+          value: "172.31.2.161:11800"
+        - name: "SW_AGENT_NAME"
+          value: "myserver-k8s-go-app3"
         ports:
         - containerPort: 8080
           protocol: TCP

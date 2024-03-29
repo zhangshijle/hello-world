@@ -17,7 +17,10 @@ FROM golang:1.21.0 as builder
 WORKDIR /app
 RUN go mod init hello-app
 COPY *.go ./
-RUN CGO_ENABLED=0 GOOS=linux go build -o /hello-app
+ADD apache-skywalking-go-0.4.0-bin.tgz /
+RUN go env -w GOPROXY=https://goproxy.cn
+RUN go get github.com/apache/skywalking-go
+RUN CGO_ENABLED=0 GOOS=linux go build  -toolexec="/apache-skywalking-go-0.4.0-bin/bin/skywalking-go-agent-0.4.0-linux-amd64" -a -o /hello-app
 
 #FROM gcr.io/distroless/base-debian11
 FROM gcriodistroless/base-debian11 
