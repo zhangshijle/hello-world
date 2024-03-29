@@ -1,4 +1,5 @@
 ## 项目简介： 
+GitHub 地址：https://github.com/zhangshijle/hello-world
 
 ```
 1.将基于go语言开发的项目进行代码编译、构建成容器镜像并上传到京东云镜像仓库、部署到京东云kubernetes环境, 并
